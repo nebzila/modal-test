@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useRef, useState } from 'react';
 
@@ -10,6 +9,7 @@ function App() {
 	const ActionModal = useRef(null);
 	const ResultModal = useRef(null);
 	const PersonOption = useRef(null);
+	const PersonOption1 = useRef(null);
 	const AnimalOption = useRef(null);
 	const DescriptionOption = useRef(null);
 	const ActionOption = useRef(null);
@@ -30,13 +30,53 @@ function App() {
 
 	return (
 		<>
-			<button
-				onClick={() => {
-					PersonModal.current.showModal();
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '100vh',
+					width: '100vw',
 				}}
 			>
-				Open Modal Chain
-			</button>
+				<div
+					id='buttonContainer'
+					className='buttonContainer'
+					style={{
+						border: 'solid black 5px',
+						borderRadius: '15px',
+						padding: '5px',
+					}}
+				>
+					<h2>Alchemie Story</h2>
+					<button
+						className='button'
+						onClick={() => {
+							PersonModal.current.showModal();
+						}}
+					>
+						Open Modal Chain
+					</button>
+					<button
+						style={{ marginTop: '5px', marginBottom: '5px' }}
+						className='button'
+						onClick={() => {
+							modal.current.showModal();
+						}}
+					>
+						Open Paginated Modal
+					</button>
+					<button
+						className='button'
+						onClick={() => {
+							setMultiModal(!multiModal);
+						}}
+					>
+						Open multi modals
+					</button>
+				</div>
+			</div>
 			<dialog ref={PersonModal}>
 				<div
 					id='ModalContent'
@@ -51,12 +91,13 @@ function App() {
 				>
 					<h1 tabIndex={1}>Select Person</h1>
 					<select
-						ref={PersonOption}
+						ref={PersonOption1}
 						onChange={() => {
-							setPerson(PersonOption.current.value);
+							console.log(PersonOption1.current.value);
+							setPerson(PersonOption1.current.value);
 						}}
 					>
-						<option selected={true}>Select</option>
+						<option>Select</option>
 						<option>Joe</option>
 						<option>Julie</option>
 						<option>Katherine</option>
@@ -67,10 +108,11 @@ function App() {
 						<option>Deb</option>
 						<option>Aiden</option>
 						<option>Ben</option>
+						<option>Nicole</option>
 					</select>
 					<button
 						onClick={() => {
-							PersonOption.current.selectedIndex = 0;
+							PersonOption1.current.selectedIndex = 0;
 							PersonModal.current.close();
 							AnimalModal.current.showModal();
 						}}
@@ -95,6 +137,7 @@ function App() {
 					<select
 						ref={AnimalOption}
 						onChange={() => {
+							console.log(AnimalOption.current.value);
 							setAnimal(AnimalOption.current.value);
 						}}
 					>
@@ -222,13 +265,6 @@ function App() {
 				</div>
 			</dialog>
 
-			<button
-				onClick={() => {
-					modal.current.showModal();
-				}}
-			>
-				Open Paginated Modal
-			</button>
 			<div className='App'>
 				<dialog ref={modal}>
 					<div
@@ -376,13 +412,6 @@ function App() {
 					</div>
 				</dialog>
 			</div>
-			<button
-				onClick={() => {
-					setMultiModal(!multiModal);
-				}}
-			>
-				Open multi modals
-			</button>
 			{multiModal ? (
 				<div
 					id='modal2'
